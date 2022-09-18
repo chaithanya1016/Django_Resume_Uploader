@@ -1,0 +1,48 @@
+{% extends "webapp/base.html" %}
+
+<!-- Head Starts from here...!! -->
+{% block head %} {% load static %}
+
+<!-- End of Head block -->
+{% endblock head %}
+
+<!-- Content Starts from here...!! -->
+{% block content %}
+
+
+
+
+<div class='container mt-2 mb-5'>
+    <h3 class="alert alert-danger text-center"> Resume Uploader</h3>
+    <div class="row">
+        <div class="col-sm-8">
+            <h4 class="alert alert-warning text-center">Add Resume</h4>
+            <form action="" method="post" class="shadow" enctype="multipart/form-data">
+                <!-- form Error -->
+                {% if form.non_field_errors %} {% for error in form.non_field_errors %}
+                <p class="alert alert-danger">{{error}}</p>
+                {% endfor %} {% endif %}
+
+                <!-- form starts here-->
+                {% csrf_token %} {% for fm in form %}
+                <div class="form-group mb-1 mx-3 pt-4">
+                    {{fm.label_tag}} {{fm}} <small class="text-danger"> {{fm.errors|striptags}} </small>
+                </div>
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </div>
+
+        <!-- Candidate List -->
+        <div class="col-sm-4">
+            <h4 class="alert alert-success text-center">List of Candidates</h4>
+            <div class="shadow">
+                <div class="mx-4 pt-4">
+                    {% for can in can %} {{ can.id }} <a href="{% url 'candidate' can.id %}">{{ can.name }}</a>
+                    <hr> {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
